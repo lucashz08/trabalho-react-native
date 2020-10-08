@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import imgLogo from '../img/logo.png';
 import {Input, Btn, BtnBorder, BtnBack} from '../components/componets';
@@ -17,15 +17,30 @@ export const ScreenLogin = ({screen}) => {
 }
 
 export const ScreenRegister = ({screen}) => {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [rePassword, setRePassword] = useState('');
+
+    let dataRegister = {email : email, password : password}
+
+    const handleChangeEmail = text => setEmail(text)
+    const handleChangePassword = text => setPassword(text)
+    const handleChangeRePassword = text => setRePassword(text)
+
+    const sendData = () => {
+        (password === rePassword) ? console.warn('ok') :  console.warn('password diferente');
+    }
+
     return (
         <View style={style.main}>
                     
             <Image style={style.img} source={imgLogo} />
             <Text style={style.text} >Enter with your data below :</Text>
-            <Input placeholder="exemple@gmail.com" />
-            <Input placeholder="enter with your password" />
-            <Input placeholder="enter with your pass again" />
-            <BtnBorder title="Create a new Account" />
+            <Input placeholder="exemple@gmail.com" name="lucas" onChangeText={handleChangeEmail} />
+            <Input placeholder="enter with your password" onChangeText={handleChangePassword}/>
+            <Input placeholder="enter with your pass again" onChangeText={handleChangeRePassword} />
+            <BtnBorder title="Create a new Account" onPress={sendData} />
             
             <View style={style.footer}>
                  <BtnBack  onPress={() => screen(0)}/>
@@ -57,3 +72,5 @@ const style = StyleSheet.create({
         width : '90%'
     }
 });
+
+

@@ -22,7 +22,7 @@ const screenStart = () => {
             : 
             <ScreenRegister screen={handleChangeScreen} />
         }
-        
+
     </SafeAreaView>
     )
 }
@@ -34,4 +34,5 @@ const style = StyleSheet.create({
         flex : 1
     }
   });
+  
 export default screenStart;
