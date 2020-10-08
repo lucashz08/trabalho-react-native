@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, Alert} from 'react-native';
 import imgLogo from '../img/logo.png';
 import {Input, Btn, BtnBorder, BtnBack} from '../components/componets';
 
-export const ScreenLogin = ({screen}) => {
+export const ScreenLogin = ({screenView}) => {
     return (
         <View style={style.main}>        
             <Image style={style.img} source={imgLogo} />
@@ -11,42 +11,54 @@ export const ScreenLogin = ({screen}) => {
             <Input placeholder="exemple@gmail.com" />
             <Input placeholder="enter with your password" />
             <BtnBorder title="Sign In" />
-            <Btn title="Click here to create a account ." onPress={() => screen(1)}/>
+            <Btn title="Click here to create a account ." onPress={() => screenView(1)}/>
         </View>
     )
 }
 
-export const ScreenRegister = ({screen}) => {
+export const ScreenRegister = ({screenView}) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
 
-    let dataRegister = {email : email, password : password}
+    
 
     const handleChangeEmail = text => setEmail(text)
     const handleChangePassword = text => setPassword(text)
     const handleChangeRePassword = text => setRePassword(text)
 
-    const sendData = () => {
-        (password === rePassword) ? console.warn('ok') :  console.warn('password diferente');
+    const dataSend = () => {
+
+        if(email.length == 0){
+            Alert.alert('Email Alert', 'Email is not valid!')
+            return;
+        }else if(password !== rePassword){
+            Alert.alert('Password Alert', 'Password dont have a match!')
+            return;
+        }else if(password.length == 0){
+            Alert.alert('Password Alert', 'Password is Empty!')
+            return;
+        }
+
+        let dataRegister = {email : email, password : password}
+
+        console.warn(dataRegister)
     }
 
     return (
-        <View style={style.main}>
-                    
+        <View style={style.main}>             
             <Image style={style.img} source={imgLogo} />
             <Text style={style.text} >Enter with your data below :</Text>
             <Input placeholder="exemple@gmail.com" name="lucas" onChangeText={handleChangeEmail} />
-            <Input placeholder="enter with your password" onChangeText={handleChangePassword}/>
-            <Input placeholder="enter with your pass again" onChangeText={handleChangeRePassword} />
-            <BtnBorder title="Create a new Account" onPress={sendData} />
+            <Input placeholder="enter with your password" onChangeText={handleChangePassword} secureTextEntry={true}/>
+            <Input placeholder="enter with your pass again" onChangeText={handleChangeRePassword} secureTextEntry={true}/>
+            <BtnBorder title="Create a new Account" onPress={dataSend} />
             
             <View style={style.footer}>
-                 <BtnBack  onPress={() => screen(0)}/>
+                 <BtnBack  onPress={() => screenView(0)}/>
             </View>
         </View>
-        
     )
 }
 

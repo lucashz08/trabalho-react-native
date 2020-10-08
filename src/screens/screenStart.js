@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {ScreenLogin, ScreenRegister} from './screensMain';
 
@@ -10,21 +10,15 @@ const screenStart = () => {
         setScreen(number);
     }
 
-    useEffect(() => {
-        handleChangeScreen(0)
-    },[]);
-
     return (
     <SafeAreaView style={style.main}>
-
         {  screen == 0 ? 
-            <ScreenLogin screen={handleChangeScreen} /> 
+            <ScreenLogin screenView={handleChangeScreen} /> 
             : 
-            <ScreenRegister screen={handleChangeScreen} />
+            <ScreenRegister screenView={handleChangeScreen} />
         }
-
     </SafeAreaView>
-    )
+    );
 }
 
 const style = StyleSheet.create({
