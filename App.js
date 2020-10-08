@@ -1,21 +1,8 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
-import ScreenLogin from './src/screens/login';
-
+import ScreenStart from './src/screens/screenStart';
 
 const App = () => {
-
-  return (
-      <SafeAreaView style={style.main}>
-          <ScreenLogin />
-      </SafeAreaView>
-  );
+  return ( <ScreenStart /> );
 };
-const style = StyleSheet.create({
-  main : {
-      backgroundColor : '#e9ebee',
-      flexDirection : 'column-reverse',
-      flex : 1
-  }
-});
+
 export default App;
