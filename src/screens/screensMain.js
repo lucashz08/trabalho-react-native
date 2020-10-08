@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import {Text, View, StyleSheet, Image, Alert} from 'react-native';
 import imgLogo from '../img/logo.png';
 import {Input, Btn, BtnBorder, BtnBack} from '../components/componets';
+import server from '../server/api';
 
 export const ScreenLogin = ({screenView}) => {
     return (
         <View style={style.main}>        
             <Image style={style.img} source={imgLogo} />
             <Text style={style.text} >Enter with your login below :</Text>
-            <Input placeholder="exemple@gmail.com" />
+            <Input placeholder="example@gmail.com" />
             <Input placeholder="enter with your password" />
             <BtnBorder title="Sign In" />
             <Btn title="Click here to create a account ." onPress={() => screenView(1)}/>
@@ -22,13 +23,11 @@ export const ScreenRegister = ({screenView}) => {
     const [password, setPassword] = useState('');
     const [rePassword, setRePassword] = useState('');
 
-    
-
     const handleChangeEmail = text => setEmail(text)
     const handleChangePassword = text => setPassword(text)
     const handleChangeRePassword = text => setRePassword(text)
 
-    const dataSend = () => {
+    const dataSend = async () => {
 
         if(email.length == 0){
             Alert.alert('Email Alert', 'Email is not valid!')
@@ -43,17 +42,35 @@ export const ScreenRegister = ({screenView}) => {
 
         let dataRegister = {email : email, password : password}
 
-        console.warn(dataRegister)
+        try{
+
+            let exist = await server.get(`/usuarios?email=${email}`)
+
+            if(exist.data.length == 0){
+
+                let response = await server.post('/usuarios', dataRegister);
+                Alert.alert('Server Success', 'Your account has been created!')
+
+            }else{
+
+                Alert.alert('Email Alert', 'Email is already used!')
+
+            }
+0
+        }catch(err){
+            Alert.alert('Server Error', 'The server looks offline to register')
+        }
+        
     }
 
     return (
         <View style={style.main}>             
             <Image style={style.img} source={imgLogo} />
             <Text style={style.text} >Enter with your data below :</Text>
-            <Input placeholder="exemple@gmail.com" name="lucas" onChangeText={handleChangeEmail} />
+            <Input placeholder="example@gmail.com" name="lucas" onChangeText={handleChangeEmail} />
             <Input placeholder="enter with your password" onChangeText={handleChangePassword} secureTextEntry={true}/>
             <Input placeholder="enter with your pass again" onChangeText={handleChangeRePassword} secureTextEntry={true}/>
-            <BtnBorder title="Create a new Account" onPress={dataSend} />
+            <BtnBorder title="Create a new Account" onPress={() => dataSend()} />
             
             <View style={style.footer}>
                  <BtnBack  onPress={() => screenView(0)}/>
