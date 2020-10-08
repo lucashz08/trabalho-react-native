@@ -19,16 +19,17 @@ export const ScreenLogin = ({screenView, isLogged}) => {
 
         try{
 
-            let { data } = await server.get(`/usuarios?email=${email}&password=${password}`)
+            let response = await server.get(`/usuarios?email=${email}&password=${password}`)     
 
-            if(data.length == 0){
+            if(response.data.length == 0){
 
                 Alert.alert('Something is wrong', 'Email and password dont have a match with the server')
                 return;
 
             }else{
-                logged.id = data.id
-                logged.email = data.email
+
+                logged.id = response.data[0].id
+                logged.email = response.data[0].email
                 logged.session = true
 
                 isLogged(logged.session)
