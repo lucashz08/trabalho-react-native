@@ -1,22 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import {ScreenLogin, ScreenRegister} from './screensMain';
+import {UserContext, UserProvider} from '../components/context'
+import ScreenLogged from '../screens/screenLogged';
 
 const screenStart = () => {
 
-    const [screen, setScreen] = useState(0);
+    const [screenView, setScreenView] = useState(0)
+    const [isLogged, setLogged] = useState(false)
+    const handleChangeScreen = number => setScreenView(number)
+    
+    const screens = () => {
 
-    const handleChangeScreen = (number) => {
-        setScreen(number);
+        if(!isLogged){
+           return  (screenView == 0  ? 
+                    <ScreenLogin isLogged={setLogged} screenView={handleChangeScreen} /> 
+                    : 
+                    <ScreenRegister isLogged={setLogged} screenView={handleChangeScreen} />
+           )
+        }else{ return  <ScreenLogged /> }
+        
     }
 
     return (
     <SafeAreaView style={style.main}>
-        {  screen == 0 ? 
-            <ScreenLogin screenView={handleChangeScreen} /> 
-            : 
-            <ScreenRegister screenView={handleChangeScreen} />
+        <UserProvider>
+        {  
+            screens()
         }
+        </UserProvider>    
     </SafeAreaView>
     );
 }
@@ -24,7 +36,7 @@ const screenStart = () => {
 const style = StyleSheet.create({
     main : {
         backgroundColor : '#e9ebee',
-        flexDirection : 'column-reverse',
+        flexDirection : 'row',
         flex : 1
     }
   });
