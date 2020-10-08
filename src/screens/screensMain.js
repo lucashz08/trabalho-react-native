@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image} from 'react-native';
 import imgLogo from '../img/logo.png';
 import {Input, Btn, BtnBorder, BtnBack} from '../components/componets';
 
-export const ScreenLogin = () => {
+export const ScreenLogin = ({screen}) => {
     return (
         <View style={style.main}>        
             <Image style={style.img} source={imgLogo} />
@@ -11,12 +11,12 @@ export const ScreenLogin = () => {
             <Input placeholder="exemple@gmail.com" />
             <Input placeholder="enter with your password" />
             <BtnBorder title="Sign In" />
-            <Btn title="Click here to create a account ." />
+            <Btn title="Click here to create a account ." onPress={() => screen(1)}/>
         </View>
     )
 }
 
-export const ScreenRegister = () => {
+export const ScreenRegister = ({screen}) => {
     return (
         <View style={style.main}>
                     
@@ -28,7 +28,7 @@ export const ScreenRegister = () => {
             <BtnBorder title="Create a new Account" />
             
             <View style={style.footer}>
-                 <BtnBack />
+                 <BtnBack  onPress={() => screen(0)}/>
             </View>
         </View>
         

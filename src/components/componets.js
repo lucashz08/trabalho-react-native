@@ -67,7 +67,7 @@ export const Btn = ({title, onPress}) => {
          )
 }
 
-export const BtnBack = () => {
+export const BtnBack = ({onPress}) => {
 
     const ss = StyleSheet.create({
         txt : {
@@ -80,7 +80,7 @@ export const BtnBack = () => {
     })
 
     return (
-        <TouchableOpacity> 
+        <TouchableOpacity onPress={onPress}> 
             <Text style={ss.txt}>{'< BACK'}</Text>
         </TouchableOpacity>
     )
