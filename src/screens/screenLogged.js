@@ -40,9 +40,7 @@ const loggedMain = () => {
     return(
             <View style={ss.container}>
                 <View style={ss.main}>
-                    <ScrollView>
-                        {screenView == 0 ? <ScreenTasks /> : <ScreenProject />}  
-                    </ScrollView>   
+                     {screenView == 0 ? <ScreenTasks /> : <ScreenProject />}  
                 </View>
                 <View style={ss.footer}>
                     <View style={ss.menu}>

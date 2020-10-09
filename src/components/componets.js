@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextInput, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {TextInput, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 export const Input = ({name, placeholder, onChange, onChangeText, secureTextEntry}) => {
 
@@ -19,7 +19,7 @@ export const Input = ({name, placeholder, onChange, onChangeText, secureTextEntr
     return (<TextInput style={ss.textInput} name={name} placeholder={placeholder} onChange={onChange} onChangeText={onChangeText} secureTextEntry={secureTextEntry}/>)
 }
 
-export const BtnBorder = ({title, onPress}) => {
+export const BtnBorder = ({title, style, img, onPress}) => {
 
     const ss = StyleSheet.create({
 
@@ -36,13 +36,19 @@ export const BtnBorder = ({title, onPress}) => {
         buttonBorderText : {
             fontSize : 20,
             color : '#fafafa'
+        },
+        imgStyle : {
+            width: 25,
+            height: 25
         }
 
     })
 
     return (
-         <TouchableOpacity style={ss.buttonBorder} title={title} onPress={onPress}>
+         <TouchableOpacity style={[ss.buttonBorder, style]} title={title} onPress={onPress}>
+             { img ? <Image style={ss.imgStyle} source={img} /> :
              <Text style={ss.buttonBorderText}>{title}</Text>
+             }
          </TouchableOpacity>
          )
 }
