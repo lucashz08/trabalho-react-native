@@ -4,7 +4,7 @@ import { BtnBorder } from './componets';
 import imgBin from '../img/bin.png';
 import imgChecked from '../img/checked.jpg'
 
-const taskList = ({id, desc}) => {
+const taskList = ({id, desc, onPress}) => {
 
     const ss = StyleSheet.create({
         container : {
@@ -41,9 +41,9 @@ const taskList = ({id, desc}) => {
     })
 
     return (
-            <View key={id} style={ss.container}>
+            <View style={ss.container}>
                 <Text style={ss.txt}>{desc}</Text>
-                <BtnBorder title='Finished' style={ss.buttonChecked} img={imgChecked}></BtnBorder>
+                <BtnBorder title='Finished' style={ss.buttonChecked} img={imgChecked} onPress={onPress} />
            </View>
     )
 }

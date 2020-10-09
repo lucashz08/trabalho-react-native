@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, Alert} from 'react-native';
 import TasksList from '../components/tasksList';
 import server from '../server/api'
 
@@ -7,21 +7,50 @@ const screenTasks = () => {
 
     const[listTask, setListTask] = useState([]);
 
-    const dataSend = async () => {
+    const dataSend = async (operation, data) => {
+        
         try{
-            let response = await server.get(`/tarefas?usuarioId=1`) // atualizar depois com o id de usuario logado
-            setListTask(response.data)
+            if(operation == 1){
+            
+                let response = await server.get(`/tarefas?usuarioId=1`) // atualizar depois com o id de usuario logado
+                setListTask(response.data)
 
-        }catch(err){
+            }else if(operation == 2) {
+
+                let res = await server.put(`/tarefas/${data.id}`, data)
+            
+                if(res.data){
+                    Alert.alert('Tasks', 'The task was change sucessfully !')
+                }else{
+                    Alert.alert('Tasks', 'Something got wrong!')
+                }
+            }  
+         }catch(err){
             Alert.alert('Server Error', 'The server looks offline ;( ')
-        }
+         }
     }
 
     useEffect( () => {
 
-        dataSend();
-        
+        dataSend(1);
+
     },[])
+
+    const handleMessage = (obj) => {
+
+        Alert.alert('Tasks', 'Do you want to check it like completed ? ',
+        [
+            { text : 'Do not' },
+            {
+                text : 'Yes',
+                onPress : () => {
+                    obj.concluido = true
+                    dataSend(2, obj)
+                }
+            }
+        ])
+
+    }
 
     return (
         <View style={style.container}>
@@ -29,7 +58,7 @@ const screenTasks = () => {
                 <Text style={style.txt}>Tasks</Text>
             </View>
             <ScrollView>
-                { listTask.map(obj => <TasksList id={obj.id} desc={obj.descricao} />) }
+                { listTask.map(obj => <TasksList key={obj.id} desc={obj.descricao} onPress={ () => { handleMessage(obj) } } /> ) }
             </ScrollView>
         </View>
     )
