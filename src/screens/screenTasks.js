@@ -1,8 +1,13 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Text, View} from 'react-native';
+import TasksList from '../components/tasksList';
 
 const screenTasks = () => {
-    return <Text>tela de tarefas</Text>
+    return (
+        <View>
+           <TasksList id={1} desc={'testando'} />
+        </View>
+    )
 }
 
 export default screenTasks;

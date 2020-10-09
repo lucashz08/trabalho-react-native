@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import { Btn } from '../components/componets.js';
 import {UserContext} from '../components/context.js';
 import ScreenTasks from './screenTasks';
@@ -40,7 +40,9 @@ const loggedMain = () => {
     return(
             <View style={ss.container}>
                 <View style={ss.main}>
-                    {screenView == 0 ? <ScreenTasks /> : <ScreenProject />}     
+                    <ScrollView>
+                        {screenView == 0 ? <ScreenTasks /> : <ScreenProject />}  
+                    </ScrollView>   
                 </View>
                 <View style={ss.footer}>
                     <View style={ss.menu}>
