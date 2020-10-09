@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-export const Input = ({name, placeholder, onChange, onChangeText, secureTextEntry}) => {
+export const Input = ({name, placeholder, onChange, onChangeText, secureTextEntry, style}) => {
 
     const ss = StyleSheet.create({
         textInput : {
@@ -16,7 +16,7 @@ export const Input = ({name, placeholder, onChange, onChangeText, secureTextEntr
         }
     })
 
-    return (<TextInput style={ss.textInput} name={name} placeholder={placeholder} onChange={onChange} onChangeText={onChangeText} secureTextEntry={secureTextEntry}/>)
+    return (<TextInput style={[ss.textInput, style]} name={name} placeholder={placeholder} onChange={onChange} onChangeText={onChangeText} secureTextEntry={secureTextEntry}/>)
 }
 
 export const BtnBorder = ({title, style, img, onPress}) => {
