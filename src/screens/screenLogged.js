@@ -12,18 +12,26 @@ const loggedMain = () => {
             flex : 20
         },
         footer : {
-            flex : 1,
+            flex : 2,
             alignItems : 'center',
             borderTopColor : '#ccc',
             borderTopWidth: 1,
-            paddingTop : 20,
+    
             backgroundColor : '#e9ebee'
         }, 
         container : {
             flexDirection : 'column',
             flex : 1
 
-        }
+        },
+        menu : {
+            flexDirection : 'row'
+        },
+        marginBtn : {
+             position : 'relative',
+             marginLeft : 15,
+             marginRight : 15
+         }
     })
 
     return(
@@ -32,11 +40,10 @@ const loggedMain = () => {
                     <Text>voce esta logado </Text>
                 </View>
                 <View style={ss.footer}>
-                    <Text>
-                        <Btn title="TAREFAS" />
-                        <Text>          </Text>
-                        <Btn title="PROJETOS" />
-                    </Text>
+                    <View style={ss.menu}>
+                        <Btn style={ss.marginBtn} title="TAREFAS" />
+                        <Btn style={ss.marginBtn} title="PROJETOS" />
+                    </View>
                 </View>
            </View>
            )

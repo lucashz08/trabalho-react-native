@@ -47,13 +47,12 @@ export const BtnBorder = ({title, onPress}) => {
          )
 }
 
-export const Btn = ({title, onPress}) => {
+export const Btn = ({title, onPress, style}) => {
     
     const ss = StyleSheet.create({
         button : {
             marginTop : 20
         },
-    
         buttonText : {
             fontSize : 20,
             color : 'rgb(0, 185, 208)'
@@ -61,7 +60,7 @@ export const Btn = ({title, onPress}) => {
     })
 
     return (
-         <TouchableOpacity style={ss.button} title={title} onPress={onPress}>
+         <TouchableOpacity style={[ss.button, style]} title={title} onPress={onPress}>
              <Text style={ss.buttonText}>{title}</Text>
          </TouchableOpacity>
          )
