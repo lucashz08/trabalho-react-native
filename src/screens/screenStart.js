@@ -7,7 +7,7 @@ import ScreenLogged from '../screens/screenLogged';
 const screenStart = () => {
 
     const [screenView, setScreenView] = useState(0)
-    const [isLogged, setLogged] = useState(true)
+    const [isLogged, setLogged] = useState(false)
     const handleChangeScreen = number => setScreenView(number)
     
     const screens = () => {

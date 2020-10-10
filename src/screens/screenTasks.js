@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {Text, View, StyleSheet, ScrollView, Alert} from 'react-native';
 import TasksList from '../components/tasksList';
 import server from '../server/api'
+import {UserContext} from '../components/context';
 
 const screenTasks = () => {
 
     const[listTask, setListTask] = useState([]);
-
+    const logged = useContext(UserContext)
+    
     const dataSend = async (operation, data) => {
         
         try{
@@ -32,7 +34,7 @@ const screenTasks = () => {
                     break;
                 default : {
 
-                    let response = await server.get(`/tarefas?usuarioId=1`) // atualizar depois com o id de usuario logado
+                    let response = await server.get(`/tarefas?usuarioId=${logged.id}`) // atualizar depois com o id de usuario logado
                     setListTask(response.data)
                 }
                     break;
