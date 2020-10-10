@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import { BtnBorder } from './componets';
 import imgBin from '../img/bin.png';
-import imgChecked from '../img/checked.jpg';
 
 const projectList = ({desc, onPress, task}) => {
    
@@ -43,11 +42,7 @@ const projectList = ({desc, onPress, task}) => {
     return (
             <View style={ss.container}>
                 <Text style={ss.txt}>{desc}</Text>
-                {   !task ?
-                    <BtnBorder title='Finished' style={ss.buttonChecked} img={imgChecked} onPress={onPress} />
-                    :
-                    <BtnBorder title='Delete' style={ss.buttonDelete} img={imgBin} onPress={onPress} />
-                }
+                {<BtnBorder title='Delete' style={ss.buttonDelete} img={imgBin} onPress={onPress} />}
            </View>
     )
 }

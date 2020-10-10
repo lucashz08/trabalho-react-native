@@ -30,8 +30,15 @@ const screenProject = () => {
                     }
                 }
                 break;
+                case 2 : {
+                    let response = await server.delete(`/projetos/${data.id}`, data)
+                    if(response.data){
+                        Alert.alert('Project', `The "${data.descricao}" was delete !`)
+                        dataSend()
+                    }
+                }
+                break;
                 default : {
-                      
                     let response = await server.get('/projetos')
                     setListProject(response.data)
                 }
@@ -47,6 +54,20 @@ const screenProject = () => {
 
     },[])
 
+    const handleDeleteProject = (obj) => {
+        Alert.alert('Project', `Do you want to delete "${obj.descricao}" ?`,
+        [
+            {text : 'Do not'},
+            {
+                text : 'Yes',
+                onPress : () => {
+                    dataSend(2, obj)
+                    dataSend()
+                }
+             }
+         ] )
+     }
+
     return (
     <View style={style.container}>
         <View style={style.header}>
@@ -57,7 +78,7 @@ const screenProject = () => {
             <BtnBorder title="Create" style={style.btn} onPress={ () => dataSend(1, newProject) }/>
         </View>
         <ScrollView>
-            {listProject.map(obj => <ProjectList key={obj.id} desc={obj.descricao} />)}
+            {listProject.map(obj => <ProjectList key={obj.id} desc={obj.descricao} onPress={() => { handleDeleteProject(obj) }} />)}
         </ScrollView>
     </View>
     )
