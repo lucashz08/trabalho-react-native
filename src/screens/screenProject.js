@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import ProjectList from '../components/projectsList';
 import {BtnBorder, Input} from '../components/componets';
@@ -7,21 +7,45 @@ import server from '../server/api';
 const screenProject = () => {
 
     const[newProject, setNewProject] = useState({});
+    const[listProject, setListProject] = useState([]);
+
     const handleChangeNameProject = txt => setNewProject({ descricao : txt})
 
-    const dataSend = async () => {
+    const dataSend = async (operation, data) => {
         try{
-            let response = await server.post('/projetos', newProject)
+            switch(operation){  
+                case 1 : {
+                    if(data.descricao.length == 0){
+                        Alert.alert('Input is Empty', 'You need give it a name !')
+                        return;
+                    }
 
-            if(response.data.length == 0){
-                Alert.alert('Server Error', 'Error to create a new Project !')
-            }else{
-                Alert.alert('Server Success', 'Your project was create !')
+                    let response = await server.post('/projetos', data)
+
+                    if(response.data.length == 0){
+                        Alert.alert('Server Error', 'Error to create a new Project !')
+                    }else{
+                          Alert.alert('Server Success', 'Your project was create !')
+                          dataSend()
+                    }
+                }
+                break;
+                default : {
+                      
+                    let response = await server.get('/projetos')
+                    setListProject(response.data)
+                }
             }
         }catch(err){
             Alert.alert('Server Error', 'The server looks offline ;( ')
         }
     }
+
+    useEffect( () => {
+        
+        dataSend()
+
+    },[])
 
     return (
     <View style={style.container}>
@@ -30,10 +54,10 @@ const screenProject = () => {
         </View>
         <View style={style.pro}>
             <Input placeholder="Create a new project" style={style.inp} onChangeText={handleChangeNameProject}/>
-            <BtnBorder title="Create" style={style.btn} onPress={ () => dataSend() }/>
+            <BtnBorder title="Create" style={style.btn} onPress={ () => dataSend(1, newProject) }/>
         </View>
         <ScrollView>
-             <ProjectList /> 
+            {listProject.map(obj => <ProjectList key={obj.id} desc={obj.descricao} />)}
         </ScrollView>
     </View>
     )
@@ -64,7 +88,8 @@ const style = StyleSheet.create({
         flexDirection : 'row',
         borderBottomWidth : 1,
         borderBottomColor : '#000',
-        padding: 10
+        padding: 10,
+        backgroundColor : '#fafafa'
     },
     btn : {
         flex : 2,
