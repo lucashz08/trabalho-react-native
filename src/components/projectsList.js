@@ -3,8 +3,9 @@ import {Text, StyleSheet, View} from 'react-native';
 import { BtnBorder } from './componets';
 import imgBin from '../img/bin.png';
 import imgNew from '../img/new.png';
+import imgFolder from '../img/folder.png';
 
-const projectList = ({desc, onPress, task}) => {
+const projectList = ({desc, onPress, task, see}) => {
    
     const ss = StyleSheet.create({
         container : {
@@ -43,6 +44,7 @@ const projectList = ({desc, onPress, task}) => {
     return (
             <View style={ss.container}>
                 <Text style={ss.txt}>{desc}</Text>
+                <BtnBorder title='Folder' style={ss.buttonDelete} img={imgFolder} onPress={see} />
                 <BtnBorder title='New' style={ss.buttonDelete} img={imgNew} onPress={task} />
                 <BtnBorder title='Delete' style={ss.buttonDelete} img={imgBin} onPress={onPress} />
            </View>
