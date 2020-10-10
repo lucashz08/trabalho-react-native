@@ -34,7 +34,7 @@ const screenTasks = () => {
                     break;
                 default : {
 
-                    let response = await server.get(`/tarefas?usuarioId=${logged.id}`) // atualizar depois com o id de usuario logado
+                    let response = await server.get(`/tarefas?usuarioId=${logged.id}`)
                     setListTask(response.data)
                 }
                     break;
