@@ -8,8 +8,9 @@ const screenProject = () => {
 
     const[newProject, setNewProject] = useState({});
     const[listProject, setListProject] = useState([]);
+    const[newTaskEmail, setNewTaskEmail] = useState('');
 
-    const handleChangeNameProject = txt => setNewProject({ descricao : txt})
+    const handleChangeNameProject = txt => setNewProject( { descricao : txt} )
 
     const dataSend = async (operation, data) => {
         try{
@@ -38,6 +39,23 @@ const screenProject = () => {
                     }
                 }
                 break;
+                case 3 : {
+                    let response = await server.get(`/usuarios?email=${newTaskEmail}`)
+
+                    if(response.data){
+                        data.usuarioId = response.data.id
+
+                        let res = await server.post('/tarefas', data)
+
+                        if(res.data){
+                            Alert.alert('Server Success', 'The new task was create !')
+                        }
+
+                    }else{
+                        Alert.alert('Error Server', 'We dint find a use with this email, Sorry !')
+                    }
+                }
+                break;
                 default : {
                     let response = await server.get('/projetos')
                     setListProject(response.data)
@@ -53,6 +71,49 @@ const screenProject = () => {
         dataSend()
 
     },[])
+
+    const handleCreateTask = (obj) => {
+
+        let nameIt = 'Create a Task'
+
+        Alert.prompt(
+            nameIt,
+            'What will be the Name ?',
+            [
+              {text: 'Cancel'},
+              {
+                text: 'Next',
+                onPress: taskName => {
+
+                    if(taskName.length > 0){
+                        
+
+                        Alert.prompt(nameIt, 'How will make this task ? What the Email ?',
+                        [
+                            {text : 'Cancel'},
+                            {
+                                text : ' Send',
+                                onPress : taskEmail => {
+
+                                    setNewTaskEmail(taskEmail)
+
+                                    const taskRegister = { descricao : taskName,
+                                                           concluido : false,
+                                                           projetoId : obj.id}
+
+                                    dataSend(3, taskRegister)
+                                }
+                            }
+                        ]);
+
+                    }else{
+                        Alert.alert(nameIt, 'You need get it a name !')
+                    }
+                }
+              }
+            ]  
+        );
+    }
 
     const handleDeleteProject = (obj) => {
         Alert.alert('Project', `Do you want to delete "${obj.descricao}" ?`,
@@ -78,7 +139,7 @@ const screenProject = () => {
             <BtnBorder title="Create" style={style.btn} onPress={ () => dataSend(1, newProject) }/>
         </View>
         <ScrollView>
-            {listProject.map(obj => <ProjectList key={obj.id} desc={obj.descricao} onPress={() => { handleDeleteProject(obj) }} />)}
+            {listProject.map(obj => <ProjectList key={obj.id} desc={obj.descricao} onPress={() => { handleDeleteProject(obj) }} task={ () => handleCreateTask(obj) } />)}
         </ScrollView>
     </View>
     )

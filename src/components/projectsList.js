@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, StyleSheet, View} from 'react-native';
 import { BtnBorder } from './componets';
 import imgBin from '../img/bin.png';
+import imgNew from '../img/new.png';
 
 const projectList = ({desc, onPress, task}) => {
    
@@ -42,7 +43,8 @@ const projectList = ({desc, onPress, task}) => {
     return (
             <View style={ss.container}>
                 <Text style={ss.txt}>{desc}</Text>
-                {<BtnBorder title='Delete' style={ss.buttonDelete} img={imgBin} onPress={onPress} />}
+                <BtnBorder title='New' style={ss.buttonDelete} img={imgNew} onPress={task} />
+                <BtnBorder title='Delete' style={ss.buttonDelete} img={imgBin} onPress={onPress} />
            </View>
     )
 }
