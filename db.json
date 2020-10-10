@@ -10,6 +10,10 @@
     {
       "descricao": "Projeto Final",
       "id": 1
+    },
+    {
+      "descricao": "Testing create a new project",
+      "id": 2
     }
   ],
   "tarefas": [
